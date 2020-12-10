@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts',
+    'locations',
 ]
 
 MIDDLEWARE = [
@@ -121,6 +122,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
+
 AUTH_USER_MODEL = 'accounts.User'
 
 AUTHENTICATION_BACKENDS = [
@@ -129,6 +134,7 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 LOGOUT_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/'
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())

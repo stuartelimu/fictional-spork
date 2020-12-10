@@ -207,7 +207,6 @@ a {
 
     <!-- <script src="https://apis.google.com/js/platform.js" async defer></script> -->
     <script src="https://apis.google.com/js/api:client.js"></script>
-    <script src="{% static 'accounts/js/script.js' %}"></script>
 
     <script>
 
@@ -232,32 +231,38 @@ a {
       UNAME.addEventListener('change', e => {
         console.log(e.target.value);
         let username = e.target.value;
+
+        const LOGINF = document.querySelector('.login-form');
+        console.log(LOGINF)
         
 
-        fetch('{% url "validate_username" %}', {
-          method: 'GET',
-          mode: 'same-origin',
-          body: JSON.stringify({
-            username: username
-          }),
-          headers: {
-            'Content-type': 'application/json; charset=UTF-8',
-            'X-CSRFToken': csrftoken
-          }
-        }).then(function (response) {
+        fetch(`{% url "validate_username" %}?username=${username}`)
+        .then(function (response) {
           if (response.ok) {
             return response.json();
           }
           return Promise.reject(response);
         }).then(function (data) {
           console.log(data);
-          if(data.is_taken == 200) { 
-            alert('a user with this username is already taken')
+          if(!data.is_taken) { 
+            // alert('a user with this username is already taken')
+            document.querySelector('#btn-login span').textContent = 'sign up'; 
           }
         }).catch(function (error) {
           console.warn('Something went wrong.', error);
         });
       })
+
+      const BTNSUBMIT = document.querySelector('#btn-login span').textContent;   
+      const LOGINF = document.querySelector('.login-form');
+      LOGINF.addEventListener('submit', (e) => {
+        e.preventDefault();
+        console.log('a')
+
+        BTNSUBMIT === 'sign up' ? location.href = 'signup.html' : LOGINF.submit()
+      })
+
+
     </script>
 
 
@@ -321,6 +326,8 @@ a {
       // MDCTextField.setHelperTextContent('help me');
       
     </script>
+    <script src="{% static 'accounts/js/script.js' %}"></script>
+
     <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
 
         

@@ -15,7 +15,11 @@ class UserCreateView(generic.CreateView):
 
 def validate_username(request):
     username = request.GET.get('username', None)
+    is_taken = False
+    if(get_user_model().objects.filter(email__iexact=username).exists() or get_user_model().objects.filter(username__iexact=username).exists()):
+        is_taken = True
+    
     data = {
-        'is_taken': get_user_model().objects.filter(username__iexact=username).exists()
+        'is_taken': is_taken
     }
     return JsonResponse(data)

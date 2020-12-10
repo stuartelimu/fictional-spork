@@ -105,13 +105,14 @@
             <button class="mdc-icon-button material-icons mdc-top-app-bar__action-item--unbounded" aria-label="Bookmark this page">notifications</button>
             <button class="mdc-icon-button material-icons mdc-top-app-bar__action-item--unbounded mdc-menu-surface--anchor"  id="menu-open">
               
-              <img src="img/avator.jpg" id="avator" class="mdc-icon-button__icon"/>
+              <img src="{% if request.user.avator %}{{ request.user.avator }}{% else %}{% static 'img/avatar.png' %}{% endif %}" id="avator" class="mdc-icon-button__icon"/>
+
               <div class="mdc-menu mdc-menu-surface">
                 <h2 class="mdc-typography mdc-typography--subtitle2" style="text-align: justify; margin-top: 20px; padding-left: 16px;">Account Details</h2>
                 <div class="my-mdc-menu-header">
                   <div>
                     
-                    <h3 class="mdc-typography mdc-typography--subtitle2 name">Abhishek Verma</h3>
+                    <h2 class="mdc-typography mdc-typography--subtitle2">{{ request.user.first_name }} {{ request.user.last_name }}</h2>
 
                     <!-- <h6 id="mdc-dialog-with-list-label" class="mdc-dialog__title">Abhishek Verma</h6> -->
                     <h6 class="mdc-typography">4.86 <span class="material-icons">star</span></h6>
@@ -126,13 +127,13 @@
                 </div>
                 
                 
-                <img src="img/avator.jpg" id="avator-lg" alt="Abhishek Verma" style="width: 60px; height: 60px; border-radius: 50%;">
+                <!-- <img src="img/avator.jpg" id="avator-lg" alt="Abhishek Verma" style="width: 60px; height: 60px; border-radius: 50%;"> -->
                 <ul class="mdc-list profile-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1">
     
                   <li class="mdc-list-item" role="menuitem" tabindex="0">
                     <!-- <span class="mdc-list-item__ripple"></span> -->
                     <span class="mdc-list-item__graphic material-icons">home</span>
-                    <span class="mdc-list-item__text">Joined Jan-2020</span>
+                    <span class="mdc-list-item__text">Joined {{ request.user.date_joined|date }}</span>
                     <!-- <span class="mdc-list-item__meta material-icons" aria-hidden="true">info</span> -->
                   </li>
                   <li class="my-mdc-list-item" role="menuitem" tabindex="1">
@@ -146,7 +147,7 @@
                   <li class="my-mdc-list-item" role="menuitem" tabindex="2">
                     <!-- <span class="mdc-list-item__ripple"></span> -->
                     <span class="mdc-list-item__graphic material-icons">email</span>
-                    <span id="email-alias" class="mdc-list-item__text email">av@gmail.com</span>
+                    <span id="email-alias" class="mdc-list-item__text email">{{ request.user.email }}</span>
                     <span class="mdc-list-item__meta material-icons edit-email" aria-hidden="true">edit</span>
 
                   </li>
@@ -183,6 +184,15 @@
                     <span class="mdc-list-item__ripple"></span>
                     <span class="mdc-list-item__graphic material-icons">settings</span>
                     <span class="mdc-list-item__text">Settings</span>
+                  </li>
+                  <li class="my-mdc-list-item" role="menuitem">
+                    <span class="mdc-list-item__ripple"></span>
+                    <span class="mdc-list-item__graphic material-icons">login</span>
+                    <span class="mdc-list-item__text">
+                      <a href="{% url 'logout' %}">
+                        Logout
+                      </a>
+                    </span>
                   </li>
                 </ul>
                 <div>
@@ -1080,7 +1090,7 @@
           EMAILALIAS.textContent = sessionStorage.email;
         }
 
-        document.querySelector('.name').textContent = sessionStorage.getItem('name');
+        // document.querySelector('.name').textContent = sessionStorage.getItem('name');
         
         const switchControl = new mdc.switchControl.MDCSwitch(document.querySelector('.mdc-switch'));
         // switchControl.handleChange('change', () => {
