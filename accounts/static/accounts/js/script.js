@@ -183,9 +183,9 @@ EMAILINPUT.addEventListener('blur', () => {
 const FORM = document.querySelector('form');
 
 FORM.addEventListener('submit', (e) => {
-  e.preventDefault();
+  // e.preventDefault();
 
-  let BTNACTION = FORM.querySelector('button[type=submit] span').textContent;
+  // let BTNACTION = FORM.querySelector('button[type=submit] span').textContent;
 
   // login or redirect to next page to continue signup
   // fetch('checkemail.php', {
@@ -210,39 +210,39 @@ FORM.addEventListener('submit', (e) => {
   // const input = document.querySelector("#phone").value;
   // console.log(input);
 
-  sessionStorage.setItem("password", PWD.value);
-  sessionStorage.setItem("email", EMAILINPUT.value);
+  // sessionStorage.setItem("password", PWD.value);
+  // sessionStorage.setItem("email", EMAILINPUT.value);
 
-  console.log(PWD.value)
-  console.log(EMAILINPUT.value)
+  // console.log(PWD.value)
+  // console.log(EMAILINPUT.value)
 
-  if (BTNACTION === 'sign up') {
-    location.href = 'signup.html'
-  } else {
+  // if (BTNACTION === 'sign up') {
+  //   location.href = 'signup.html'
+  // } else {
 
-    fetch('login.php', {
-      method: 'POST',
-      body: JSON.stringify({
-        email: EMAILINPUT.value,
-        password: PWD.value
-      }),
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8'
-      }
-    }).then(function (response) {
-      if (response.ok) {
-        return response.json();
-      }
-      return Promise.reject(response);
-    }).then(function (data) {
-      console.log(data);
-      if(data.statusCode == 200) { location.href = 'home.html'; }
-    }).catch(function (error) {
-      console.warn('Something went wrong.', error);
-    });
+  //   fetch('login.php', {
+  //     method: 'POST',
+  //     body: JSON.stringify({
+  //       email: EMAILINPUT.value,
+  //       password: PWD.value
+  //     }),
+  //     headers: {
+  //       'Content-type': 'application/json; charset=UTF-8'
+  //     }
+  //   }).then(function (response) {
+  //     if (response.ok) {
+  //       return response.json();
+  //     }
+  //     return Promise.reject(response);
+  //   }).then(function (data) {
+  //     console.log(data);
+  //     if(data.statusCode == 200) { location.href = 'home.html'; }
+  //   }).catch(function (error) {
+  //     console.warn('Something went wrong.', error);
+  //   });
 
     
-  }
+  // }
 
 })
 
